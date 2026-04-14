@@ -8,7 +8,7 @@
     {
       "text": "Q: Laptop bị hỏng phải báo cáo như thế nào?\nA: Tạo ticket P2 hoặc P3 tùy mức độ nghiêm trọng. Mang thiết bị đến IT Room (tầng 3) để kiểm tra.",
       "source": "it_helpdesk_faq.txt",
-      "score": 0.4986,
+      "score": 0.4985,
       "metadata": {
         "source": "it_helpdesk_faq.txt"
       }
@@ -16,7 +16,7 @@
     {
       "text": "P1 — CRITICAL (Khẩn cấp):\nĐịnh nghĩa: Sự cố ảnh hưởng toàn bộ hệ thống production, không có workaround.\nVí dụ: Database sập, API gateway down, toàn bộ người dùng không thể đăng nhập.",
       "source": "sla_p1_2026.txt",
-      "score": 0.4825,
+      "score": 0.4826,
       "metadata": {
         "source": "sla_p1_2026.txt"
       }
@@ -31,24 +31,24 @@
     }
   ],
   "retrieved_sources": [
-    "it_helpdesk_faq.txt",
-    "sla_p1_2026.txt"
+    "sla_p1_2026.txt",
+    "it_helpdesk_faq.txt"
   ],
   "policy_result": {},
   "mcp_tools_used": [],
   "final_answer": "Không đủ thông tin trong tài liệu nội bộ để xác định cách xử lý hệ thống báo lỗi ERR-4092.",
   "sources": [
-    "it_helpdesk_faq.txt",
-    "sla_p1_2026.txt"
+    "sla_p1_2026.txt",
+    "it_helpdesk_faq.txt"
   ],
   "confidence": 0.3,
   "history": [
     "[supervisor] received task: Hệ thống báo lỗi ERR-4092 không rõ nguyên nhân — phải làm gì?",
     "[supervisor] DECISION: route=human_review | needs_tool=False | risk_high=True | reason=unknown error code (err-) + risk_high → human review required",
     "[human_review] HITL triggered — awaiting human input",
-    "[retrieval_worker] retrieved 3 chunks from ['it_helpdesk_faq.txt', 'sla_p1_2026.txt']",
-    "[synthesis_worker] answer generated, confidence=0.3, sources=['it_helpdesk_faq.txt', 'sla_p1_2026.txt']",
-    "[graph] completed in 1953ms"
+    "[retrieval_worker] retrieved 3 chunks from ['sla_p1_2026.txt', 'it_helpdesk_faq.txt']",
+    "[synthesis_worker] answer generated, confidence=0.3, sources=['sla_p1_2026.txt', 'it_helpdesk_faq.txt']",
+    "[graph] completed in 1960ms"
   ],
   "workers_called": [
     "human_review",
@@ -56,6 +56,6 @@
     "synthesis_worker"
   ],
   "supervisor_route": "human_review",
-  "latency_ms": 1953,
-  "run_id": "run_20260414_152757_013604"
+  "latency_ms": 1960,
+  "run_id": "run_20260414_155436_553332"
 }

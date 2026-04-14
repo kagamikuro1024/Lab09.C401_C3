@@ -47,7 +47,7 @@
       "policy_refund_v4.txt"
     ],
     "policy_version_note": "",
-    "explanation": "Trong trường hợp khách hàng yêu cầu hoàn tiền vì sản phẩm lỗi trong chương trình Flash Sale, có thể xác định như sau:\n\n### Chính sách áp dụng:\nTheo Điều 2, khách hàng có quyền yêu cầu hoàn tiền nếu:\n1. Sản phẩm bị lỗi do nhà sản xuất, không phải do người dùng.\n2. Yêu cầu được gửi trong vòng 7 ngày làm việc kể từ thời điểm xác nhận đơn hàng.\n3. Đơn hàng chưa được sử dụng hoặc chưa bị mở seal.\n\n### Ngoại lệ không được hoàn tiền:\nTheo Điều 2, có các ngoại lệ áp dụng:\n1. Sản phẩm thuộc danh mục hàng kỹ thuật số (license key, subscription).\n2. **Đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale.**\n3. Sản phẩm đã được kích hoạt hoặc đăng ký tài khoản.\n\n### Kết luận:\nDựa vào thông tin hiện có, nếu đơn hàng thuộc chương trình Flash Sale và đã áp dụng mã giảm giá, thì khách hàng sẽ **không được hoàn tiền** ngay cả khi sản phẩm bị lỗi do nhà sản xuất, vì điều này nằm trong các ngoại lệ không được hoàn tiền."
+    "explanation": "Dựa vào thông tin trong context, khách hàng yêu cầu hoàn tiền cho sản phẩm lỗi trong chương trình Flash Sale sẽ không được chấp nhận vì có một ngoại lệ rõ ràng:\n\n- **Ngoại lệ không được hoàn tiền:** Đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale.\n\nDo đó, mặc dù sản phẩm có thể bị lỗi do nhà sản xuất và khách hàng đã gửi yêu cầu đúng hạn, nhưng vì đơn hàng thuộc chương trình Flash Sale, yêu cầu hoàn tiền sẽ không được chấp nhận."
   },
   "mcp_tools_used": [
     {
@@ -89,10 +89,10 @@
         "total_found": 3
       },
       "error": null,
-      "timestamp": "2026-04-14T15:27:35.987996"
+      "timestamp": "2026-04-14T15:54:16.247369"
     }
   ],
-  "final_answer": "Khách hàng yêu cầu hoàn tiền cho sản phẩm lỗi trong chương trình Flash Sale sẽ không được chấp nhận. Theo chính sách, đơn hàng Flash Sale không được hoàn tiền, ngay cả khi sản phẩm bị lỗi do nhà sản xuất [2][3].",
+  "final_answer": "Khách hàng Flash Sale không được hoàn tiền vì sản phẩm thuộc danh mục đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale. Đây là một ngoại lệ trong chính sách hoàn tiền [2][3].",
   "sources": [
     "policy_refund_v4.txt"
   ],
@@ -104,7 +104,7 @@
     "[policy_tool_worker] policy_applies=False, exceptions=1",
     "[retrieval_worker] retrieved 3 chunks from ['policy_refund_v4.txt']",
     "[synthesis_worker] answer generated, confidence=0.55, sources=['policy_refund_v4.txt']",
-    "[graph] completed in 8222ms"
+    "[graph] completed in 5325ms"
   ],
   "workers_called": [
     "policy_tool_worker",
@@ -112,6 +112,6 @@
     "synthesis_worker"
   ],
   "supervisor_route": "policy_tool_worker",
-  "latency_ms": 8222,
-  "run_id": "run_20260414_152735_317809"
+  "latency_ms": 5325,
+  "run_id": "run_20260414_155415_691415"
 }

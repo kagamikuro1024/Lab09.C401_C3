@@ -16,7 +16,7 @@
     {
       "text": "Quy trình escalation khẩn cấp:\n1. On-call IT Admin có thể cấp quyền tạm thời (max 24 giờ) sau khi được Tech Lead phê duyệt bằng lời.\n2. Sau 24 giờ, phải có ticket chính thức hoặc quyền bị thu hồi tự động.\n3. Mọi quyền tạm thời phải được ghi log vào hệ thống Security Audit.",
       "source": "access_control_sop.txt",
-      "score": 0.5284,
+      "score": 0.5285,
       "metadata": {
         "source": "access_control_sop.txt"
       }
@@ -24,7 +24,7 @@
     {
       "text": "Level 3 — Elevated Access:\nÁp dụng cho: Team Lead, Senior Engineer, Manager.\nPhê duyệt: Line Manager + IT Admin + IT Security.\nThời gian xử lý: 3 ngày làm việc.",
       "source": "access_control_sop.txt",
-      "score": 0.501,
+      "score": 0.5011,
       "metadata": {
         "source": "access_control_sop.txt"
       }
@@ -41,7 +41,7 @@
       "access_control_sop.txt"
     ],
     "policy_version_note": "",
-    "explanation": "Dựa vào context đã cung cấp, quy trình để cấp quyền Level 3 nhằm khắc phục sự cố P1 khẩn cấp được thực hiện như sau:\n\n### Quy trình Escalation khẩn cấp:\n1. **Phê duyệt**: On-call IT Admin cần được phê duyệt bằng lời từ Tech Lead trước khi cấp quyền tạm thời.\n2. **Cấp quyền**: On-call IT Admin tiến hành cấp quyền tạm thời cho nhân viên cần thiết (max 24 giờ).\n3. **Log ghi nhận**: Mọi quyền tạm thời được cấp phải được ghi log vào hệ thống Security Audit để đảm bảo tính minh bạch và theo dõi.\n\n### Exceptions:\n- **Thời gian hiệu lực**: Quyền tạm thời chỉ có hiệu lực trong 24 giờ. Sau thời gian này, quyền sẽ bị thu hồi tự động nếu không có ticket chính thức được tạo.\n- **Ticket chính thức**: Nếu quyền cần duy trì lâu hơn 24 giờ, phải có ticket chính thức được mở để xử lý và tiếp tục cấp quyền.\n- **Đối tượng được cấp quyền**: Quyền Level 3 chỉ áp dụng cho Team Lead, Senior Engineer, và Manager. \n\nĐể khắc phục sự cố P1 khẩn cấp một cách nhanh chóng, cần tuân thủ đúng quy trình này và ghi nhớ các exceptions."
+    "explanation": "Dựa vào context đã cung cấp, quy trình cấp quyền Level 3 trong trường hợp khắc phục sự cố P1 khẩn cấp được xác định như sau:\n\n### Quy trình cấp quyền Level 3 khẩn cấp:\n\n1. **Phê duyệt:** \n   - On-call IT Admin cần có sự phê duyệt bằng lời từ Tech Lead trước khi cấp quyền tạm thời.\n  \n2. **Cấp quyền tạm thời:**\n   - On-call IT Admin có thể cấp quyền Level 3 tạm thời (tối đa 24 giờ).\n\n3. **Quản lý thời gian:**\n   - Sau 24 giờ, nếu không có ticket chính thức được tạo ra để duy trì quyền, quyền sẽ bị thu hồi tự động.\n\n4. **Ghi log:**\n   - Tất cả các quyền tạm thời phải được ghi lại vào hệ thống Security Audit để đảm bảo minh bạch và theo dõi.\n\n### Exceptions:\n- Quy trình escalation khẩn cấp chỉ áp dụng cho trường hợp sự cố P1 mà cần có quyền truy cập ngay lập tức để khắc phục.\n- Nếu không có phê duyệt bằng lời từ Tech Lead, thì quy trình này không được áp dụng và không thể cấp quyền tạm thời.\n- Quyền cấp tạm thời chỉ có hiệu lực trong tối đa 24 giờ và sẽ không được kéo dài nếu không có ticket chính thức.\n\nTóm lại, quy trình cấp quyền Level 3 trong tình huống khẩn cấp nhằm khắc phục sự cố P1 bao gồm các bước phê duyệt và tuân thủ thời gian nghiêm ngặt, với yêu cầu ghi log để đảm bảo tính an toàn và trách nhiệm của các quyền đã cấp."
   },
   "mcp_tools_used": [
     {
@@ -83,7 +83,7 @@
         "total_found": 3
       },
       "error": null,
-      "timestamp": "2026-04-14T15:27:44.109638"
+      "timestamp": "2026-04-14T15:54:21.615917"
     },
     {
       "tool": "get_ticket_info",
@@ -107,10 +107,10 @@
         ]
       },
       "error": null,
-      "timestamp": "2026-04-14T15:27:49.621656"
+      "timestamp": "2026-04-14T15:54:28.629242"
     }
   ],
-  "final_answer": "Quy trình cấp quyền Level 3 để khắc phục sự cố P1 khẩn cấp như sau:\n\n1. **Phê duyệt**: On-call IT Admin cần được Tech Lead phê duyệt bằng lời.\n2. **Cấp quyền tạm thời**: IT Admin có thể cấp quyền tạm thời (tối đa 24 giờ).\n3. **Ghi log**: Mọi quyền tạm thời phải được ghi log vào hệ thống Security Audit.\n4. **Ticket chính thức**: Sau 24 giờ, phải có ticket chính thức hoặc quyền sẽ bị thu hồi tự động.\n\nLưu ý: Quy trình này chỉ áp dụng cho trường hợp khẩn cấp và không theo quy trình thông thường [1][2].",
+  "final_answer": "Để cấp quyền Level 3 nhằm khắc phục sự cố P1 khẩn cấp, quy trình như sau:\n\n1. **Phê duyệt**: On-call IT Admin cần được phê duyệt bằng lời từ Tech Lead.\n2. **Cấp quyền tạm thời**: IT Admin có thể cấp quyền tạm thời trong tối đa 24 giờ.\n3. **Quy trình sau 24 giờ**: Sau 24 giờ, phải có ticket chính thức hoặc quyền sẽ bị thu hồi tự động.\n4. **Ghi log**: Mọi quyền tạm thời phải được ghi log vào hệ thống Security Audit.\n\nLưu ý: Quy trình này áp dụng cho trường hợp khẩn cấp và không thay thế quy trình cấp quyền thông thường [1][2].",
   "sources": [
     "access_control_sop.txt"
   ],
@@ -123,7 +123,7 @@
     "[policy_tool_worker] policy_applies=True, exceptions=0",
     "[retrieval_worker] retrieved 3 chunks from ['access_control_sop.txt']",
     "[synthesis_worker] answer generated, confidence=0.52, sources=['access_control_sop.txt']",
-    "[graph] completed in 10550ms"
+    "[graph] completed in 12463ms"
   ],
   "workers_called": [
     "policy_tool_worker",
@@ -131,6 +131,6 @@
     "synthesis_worker"
   ],
   "supervisor_route": "policy_tool_worker",
-  "latency_ms": 10550,
-  "run_id": "run_20260414_152743_541014"
+  "latency_ms": 12463,
+  "run_id": "run_20260414_155421_019940"
 }

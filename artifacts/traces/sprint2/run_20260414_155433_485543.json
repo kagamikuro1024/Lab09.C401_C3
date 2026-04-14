@@ -16,7 +16,7 @@
     {
       "text": "4.1 Điều kiện remote:\n- Nhân viên sau probation period có thể làm remote tối đa 2 ngày/tuần.\n- Team Lead phải phê duyệt lịch remote qua HR Portal.\n- Ngày onsite bắt buộc: Thứ 3 và Thứ 5 theo lịch team.",
       "source": "hr_leave_policy.txt",
-      "score": 0.6427,
+      "score": 0.6426,
       "metadata": {
         "source": "hr_leave_policy.txt"
       }
@@ -24,7 +24,7 @@
     {
       "text": "Level 2 — Standard Access:\nÁp dụng cho: Nhân viên chính thức đã qua thử việc.\nPhê duyệt: Line Manager + IT Admin.\nThời gian xử lý: 2 ngày làm việc.",
       "source": "access_control_sop.txt",
-      "score": 0.5183,
+      "score": 0.5182,
       "metadata": {
         "source": "access_control_sop.txt"
       }
@@ -47,13 +47,13 @@
     "[supervisor] DECISION: route=retrieval_worker | needs_tool=False | risk_high=False | reason=HR policy keyword detected: ['remote', 'thử việc']",
     "[retrieval_worker] retrieved 3 chunks from ['access_control_sop.txt', 'hr_leave_policy.txt']",
     "[synthesis_worker] answer generated, confidence=0.6, sources=['access_control_sop.txt', 'hr_leave_policy.txt']",
-    "[graph] completed in 2919ms"
+    "[graph] completed in 3065ms"
   ],
   "workers_called": [
     "retrieval_worker",
     "synthesis_worker"
   ],
   "supervisor_route": "retrieval_worker",
-  "latency_ms": 2919,
-  "run_id": "run_20260414_152754_092200"
+  "latency_ms": 3065,
+  "run_id": "run_20260414_155433_485543"
 }

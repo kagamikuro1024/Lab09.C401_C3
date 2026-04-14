@@ -35,7 +35,7 @@
   ],
   "policy_result": {},
   "mcp_tools_used": [],
-  "final_answer": "SLA xử lý ticket P1 là như sau:\n- Phản hồi ban đầu: 15 phút kể từ khi ticket được tạo.\n- Xử lý và khắc phục: 4 giờ. \n- Escalation: Tự động escalate lên Senior Engineer nếu không có phản hồi trong 10 phút. \n- Thông báo stakeholder: Ngay khi nhận ticket, update mỗi 30 phút cho đến khi resolve. [1]",
+  "final_answer": "SLA xử lý ticket P1 là như sau:\n\n- Phản hồi ban đầu: 15 phút kể từ khi ticket được tạo.\n- Xử lý và khắc phục: 4 giờ. \n- Escalation: Tự động escalate lên Senior Engineer nếu không có phản hồi trong 10 phút.\n- Thông báo stakeholder: Ngay khi nhận ticket, update mỗi 30 phút cho đến khi resolve. [1]",
   "sources": [
     "sla_p1_2026.txt"
   ],
@@ -45,13 +45,13 @@
     "[supervisor] DECISION: route=retrieval_worker | needs_tool=False | risk_high=False | reason=SLA/ticket keyword detected: ['p1', 'sla', 'ticket']",
     "[retrieval_worker] retrieved 3 chunks from ['sla_p1_2026.txt']",
     "[synthesis_worker] answer generated, confidence=0.62, sources=['sla_p1_2026.txt']",
-    "[graph] completed in 7121ms"
+    "[graph] completed in 7677ms"
   ],
   "workers_called": [
     "retrieval_worker",
     "synthesis_worker"
   ],
   "supervisor_route": "retrieval_worker",
-  "latency_ms": 7121,
-  "run_id": "run_20260414_152728_195186"
+  "latency_ms": 7677,
+  "run_id": "run_20260414_155408_012380"
 }
