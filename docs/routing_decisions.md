@@ -1,89 +1,64 @@
 # Routing Decisions Log — Lab Day 09
 
-**Nhóm:** ___________  
-**Ngày:** ___________
-
-> **Hướng dẫn:** Ghi lại ít nhất **3 quyết định routing** thực tế từ trace của nhóm.
-> Không ghi giả định — phải từ trace thật (`artifacts/traces/`).
-> 
-> Mỗi entry phải có: task đầu vào → worker được chọn → route_reason → kết quả thực tế.
+**Nhóm:** C401-C3 
+**Ngày:** 2026-04-14
 
 ---
 
 ## Routing Decision #1
 
 **Task đầu vào:**
-> _________________
+> SLA xử lý ticket P1 là bao lâu?
 
-**Worker được chọn:** `___________________`  
-**Route reason (từ trace):** `___________________`  
-**MCP tools được gọi:** _________________  
-**Workers called sequence:** _________________
+**Worker được chọn:** `retrieval_worker`  
+**Route reason (từ trace):** `SLA/ticket keyword detected: ['p1', 'sla', 'ticket']`  
+**MCP tools được gọi:** None  
+**Workers called sequence:** ['retrieval_worker', 'synthesis_worker']
 
 **Kết quả thực tế:**
-- final_answer (ngắn): _________________
-- confidence: _________________
-- Correct routing? Yes / No
+- final_answer (ngắn): Phản hồi 15 phút, xử lý 4 giờ.
+- confidence: 0.52
+- Correct routing? Yes
 
-**Nhận xét:** _(Routing này đúng hay sai? Nếu sai, nguyên nhân là gì?)_
-
-_________________
+**Nhận xét:** Routing chính xác nhờ keyword matching đơn giản, giúp giảm độ trễ.
 
 ---
 
 ## Routing Decision #2
 
 **Task đầu vào:**
-> _________________
+> Cần cấp quyền Level 3 để khắc phục P1 khẩn cấp. Quy trình là gì?
 
-**Worker được chọn:** `___________________`  
-**Route reason (từ trace):** `___________________`  
-**MCP tools được gọi:** _________________  
-**Workers called sequence:** _________________
+**Worker được chọn:** `policy_tool_worker`  
+**Route reason (từ trace):** `policy/access keyword detected: ['cấp quyền', 'level 3'] | risk_high=True (khẩn cấp)`  
+**MCP tools được gọi:** `search_kb`, `get_ticket_info`, `check_access_permission`  
+**Workers called sequence:** ['policy_tool_worker', 'retrieval_worker', 'synthesis_worker']
 
 **Kết quả thực tế:**
-- final_answer (ngắn): _________________
-- confidence: _________________
-- Correct routing? Yes / No
+- final_answer (ngắn): Cần sự phê duyệt của 3 bên: Line Manager, IT Admin, và IT Security.
+- confidence: 0.53
+- Correct routing? Yes
 
-**Nhận xét:**
-
-_________________
+**Nhận xét:** Đây là case phức tạp, supervisor nhận diện tốt context rủi ro.
 
 ---
 
 ## Routing Decision #3
 
 **Task đầu vào:**
-> _________________
+> ERR-403-AUTH là lỗi gì và cách xử lý?
 
-**Worker được chọn:** `___________________`  
-**Route reason (từ trace):** `___________________`  
-**MCP tools được gọi:** _________________  
-**Workers called sequence:** _________________
+**Worker được chọn:** `human_review`  
+**Route reason (từ trace):** `unknown error code (err-) + risk_high → human review required`  
+**MCP tools được gọi:** None  
+**Workers called sequence:** ['human_review', 'retrieval_worker', 'synthesis_worker']
 
 **Kết quả thực tế:**
-- final_answer (ngắn): _________________
-- confidence: _________________
-- Correct routing? Yes / No
+- final_answer (ngắn): Không tìm thấy thông tin trong tài liệu nội bộ.
+- confidence: 0.30
+- Correct routing? Yes
 
-**Nhận xét:**
-
-_________________
-
----
-
-## Routing Decision #4 (tuỳ chọn — bonus)
-
-**Task đầu vào:**
-> _________________
-
-**Worker được chọn:** `___________________`  
-**Route reason:** `___________________`
-
-**Nhận xét: Đây là trường hợp routing khó nhất trong lab. Tại sao?**
-
-_________________
+**Nhận xét:** Ngăn chặn việc AI tự bịa câu trả lời cho lỗi lạ.
 
 ---
 
@@ -93,29 +68,30 @@ _________________
 
 | Worker | Số câu được route | % tổng |
 |--------|------------------|--------|
-| retrieval_worker | ___ | ___% |
-| policy_tool_worker | ___ | ___% |
-| human_review | ___ | ___% |
+| retrieval_worker | 7 | 46% |
+| policy_tool_worker | 7 | 46% |
+| human_review | 1 | 6% |
 
 ### Routing Accuracy
-
-> Trong số X câu nhóm đã chạy, bao nhiêu câu supervisor route đúng?
-
-- Câu route đúng: ___ / ___
-- Câu route sai (đã sửa bằng cách nào?): ___
-- Câu trigger HITL: ___
+- Câu route đúng: 15 / 15
+- Câu trigger HITL: 1
 
 ### Lesson Learned về Routing
+1. **Hybrid Logic**: Keyword kết hợp LLM là tối ưu nhất.
+2. **Confidence**: synthesis_worker là chốt chặn quan trọng cuối cùng.
 
-> Quyết định kỹ thuật quan trọng nhất nhóm đưa ra về routing logic là gì?  
-> (VD: dùng keyword matching vs LLM classifier, threshold confidence cho HITL, v.v.)
+---
 
-1. ___________________
-2. ___________________
+### Route Reason Quality — Cần Cải Tiến
 
-### Route Reason Quality
+**Vấn đề:** Decision #3 route_reason chứa "unknown" → **SCORING.md violation (-2 pts)**
 
-> Nhìn lại các `route_reason` trong trace — chúng có đủ thông tin để debug không?  
-> Nếu chưa, nhóm sẽ cải tiến format route_reason thế nào?
+**Giải pháp:** Thêm confidence score vào route_reason format
+```
+{category} (confidence={score:.2f}) → {worker} | {reason}
+```
 
-_________________
+**Ví dụ fix:**
+- `unknown error code (err-)...`  
+- `error_pattern (confidence=0.88) → human_review | Unrecognized error code ERR-403-AUTH`
+

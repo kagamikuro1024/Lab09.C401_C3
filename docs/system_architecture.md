@@ -1,58 +1,35 @@
 # System Architecture — Lab Day 09
 
-**Nhóm:** ___________  
-**Ngày:** ___________  
+**Nhóm:** C401-C3 
+**Ngày:** 2026-04-14  
 **Version:** 1.0
 
 ---
 
 ## 1. Tổng quan kiến trúc
 
-> Mô tả ngắn hệ thống của nhóm: chọn pattern gì, gồm những thành phần nào.
-
 **Pattern đã chọn:** Supervisor-Worker  
-**Lý do chọn pattern này (thay vì single agent):**
-
-_________________
+**Lý do chọn pattern này (thay vì single agent):** Hệ thống cần xử lý nhiều loại yêu cầu khác nhau (tra cứu tài liệu, phân tích chính sách phức tạp, tra cứu ticket qua API). Việc tách nhỏ thành các worker giúp (1) Tối ưu prompt cho từng nhiệm vụ, (2) Dễ dàng mở rộng tính năng qua MCP mà không làm loãng context của supervisor, và (3) Có khả năng can thiệp của con người (HITL) cho các trường hợp rủi ro cao.
 
 ---
 
 ## 2. Sơ đồ Pipeline
 
-> Vẽ sơ đồ pipeline dưới dạng text, Mermaid diagram, hoặc ASCII art.
-> Yêu cầu tối thiểu: thể hiện rõ luồng từ input → supervisor → workers → output.
-
-**Ví dụ (ASCII art):**
-```
-User Request
-     │
-     ▼
-┌──────────────┐
-│  Supervisor  │  ← route_reason, risk_high, needs_tool
-└──────┬───────┘
-       │
-   [route_decision]
-       │
-  ┌────┴────────────────────┐
-  │                         │
-  ▼                         ▼
-Retrieval Worker     Policy Tool Worker
-  (evidence)           (policy check + MCP)
-  │                         │
-  └─────────┬───────────────┘
-            │
-            ▼
-      Synthesis Worker
-        (answer + cite)
-            │
-            ▼
-         Output
-```
-
 **Sơ đồ thực tế của nhóm:**
 
-```
-[NHÓM ĐIỀN VÀO ĐÂY]
+```mermaid
+graph TD
+    User([User Query]) --> Supervisor{Supervisor}
+    Supervisor -- "retrieval_worker" --> RW[Retrieval Worker]
+    Supervisor -- "policy_tool_worker" --> PW[Policy Tool Worker]
+    Supervisor -- "human_review" --> HR[Human Review]
+    
+    RW --> SW[Synthesis Worker]
+    PW -- "MCP Tool Call" --> MCP[(MCP Server)]
+    MCP -- "result" --> PW
+    PW --> SW
+    HR -- "Approve/Reject" --> RW
+    SW --> Output([Final Answer])
 ```
 
 ---
@@ -63,37 +40,37 @@ Retrieval Worker     Policy Tool Worker
 
 | Thuộc tính | Mô tả |
 |-----------|-------|
-| **Nhiệm vụ** | ___________________ |
-| **Input** | ___________________ |
-| **Output** | supervisor_route, route_reason, risk_high, needs_tool |
-| **Routing logic** | ___________________ |
-| **HITL condition** | ___________________ |
+| **Nhiệm vụ** | Phân loại yêu cầu người dùng và điều phối tới worker phù hợp. |
+| **Input** | Câu hỏi của người dùng (task). |
+| **Output** | supervisor_route, route_reason, risk_high, needs_tool. |
+| **Routing logic** | Kết hợp Keyword matching và LLM classification. |
+| **HITL condition** | Khi phát hiện risk_high=True (mã lỗi lạ hoặc yêu cầu admin). |
 
 ### Retrieval Worker (`workers/retrieval.py`)
 
 | Thuộc tính | Mô tả |
 |-----------|-------|
-| **Nhiệm vụ** | ___________________ |
-| **Embedding model** | ___________________ |
-| **Top-k** | ___________________ |
-| **Stateless?** | Yes / No |
+| **Nhiệm vụ** | Thực hiện tìm kiếm semantic trên ChromaDB để lấy evidence. |
+| **Embedding model** | `text-embedding-3-small` (1536 dims). |
+| **Top-k** | 3-5 chunks. |
+| **Stateless?** | Yes. |
 
 ### Policy Tool Worker (`workers/policy_tool.py`)
 
 | Thuộc tính | Mô tả |
 |-----------|-------|
-| **Nhiệm vụ** | ___________________ |
-| **MCP tools gọi** | ___________________ |
-| **Exception cases xử lý** | ___________________ |
+| **Nhiệm vụ** | Xử lý các yêu cầu liên quan đến chính sách và gọi các MCP tools. |
+| **MCP tools gọi** | `search_kb`, `get_ticket_info`, `check_access_permission`, `create_ticket`. |
+| **Exception cases xử lý** | Flash Sale, digital products, probation period, Level 3 access. |
 
 ### Synthesis Worker (`workers/synthesis.py`)
 
 | Thuộc tính | Mô tả |
 |-----------|-------|
-| **LLM model** | ___________________ |
-| **Temperature** | ___________________ |
-| **Grounding strategy** | ___________________ |
-| **Abstain condition** | ___________________ |
+| **LLM model** | `gpt-4o-mini` |
+| **Temperature** | 0.1 |
+| **Grounding strategy** | CHỈ dùng context cung cấp, trích dẫn [tên_file] |
+| **Abstain condition** | Khi confidence < 0.3 hoặc không có evidence. |
 
 ### MCP Server (`mcp_server.py`)
 
@@ -102,13 +79,11 @@ Retrieval Worker     Policy Tool Worker
 | search_kb | query, top_k | chunks, sources |
 | get_ticket_info | ticket_id | ticket details |
 | check_access_permission | access_level, requester_role | can_grant, approvers |
-| ___________________ | ___________________ | ___________________ |
+| create_ticket | priority, title, description | ticket_id, status |
 
 ---
 
 ## 4. Shared State Schema
-
-> Liệt kê các fields trong AgentState và ý nghĩa của từng field.
 
 | Field | Type | Mô tả | Ai đọc/ghi |
 |-------|------|-------|-----------|
@@ -120,7 +95,7 @@ Retrieval Worker     Policy Tool Worker
 | mcp_tools_used | list | Tool calls đã thực hiện | policy_tool ghi |
 | final_answer | str | Câu trả lời cuối | synthesis ghi |
 | confidence | float | Mức tin cậy | synthesis ghi |
-| ___________________ | ___________________ | ___________________ | ___________________ |
+| hitl_triggered | bool | Trạng thái kích hoạt HITL | supervisor ghi |
 
 ---
 
@@ -131,18 +106,15 @@ Retrieval Worker     Policy Tool Worker
 | Debug khi sai | Khó — không rõ lỗi ở đâu | Dễ hơn — test từng worker độc lập |
 | Thêm capability mới | Phải sửa toàn prompt | Thêm worker/MCP tool riêng |
 | Routing visibility | Không có | Có route_reason trong trace |
-| ___________________ | ___________________ | ___________________ |
+| Latency | Thấp (1 LLM call) | Cao (nhiều LLM/Tool calls) |
 
 **Nhóm điền thêm quan sát từ thực tế lab:**
-
-_________________
+Hệ thống Multi-agent vượt trội ở các câu hỏi "ngầm" — ví dụ khi hỏi về hoàn tiền, Supervisor tự hiểu cần gọi `policy_tool_worker` để check các case ngoại lệ thay vì chỉ search keyword thô.
 
 ---
 
 ## 6. Giới hạn và điểm cần cải tiến
 
-> Nhóm mô tả những điểm hạn chế của kiến trúc hiện tại.
-
-1. ___________________
-2. ___________________
-3. ___________________
+1. **Độ trễ (Latency)**: Các câu hỏi qua nhiều bước có thể mất >10s.
+2. **Chi phí (Cost)**: Tốn token cho nhiều bước trung gian.
+3. **Cải tiến**: Tích hợp thêm OCR cho tài liệu scan.
