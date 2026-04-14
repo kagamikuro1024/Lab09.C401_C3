@@ -69,19 +69,23 @@ def _get_embedding_fn():
 def _get_collection():
     """
     Kết nối ChromaDB collection.
-    TODO Sprint 2: Đảm bảo collection đã được build từ Step 3 trong README.
+    Collection name: 'rag_lab' (phù hợp với build_index.py)
     """
     import chromadb
     client = chromadb.PersistentClient(path="./chroma_db")
     try:
-        collection = client.get_collection("day09_docs")
+        collection = client.get_collection("rag_lab")
     except Exception:
-        # Auto-create nếu chưa có
-        collection = client.get_or_create_collection(
-            "day09_docs",
-            metadata={"hnsw:space": "cosine"}
-        )
-        print(f"⚠️  Collection 'day09_docs' chưa có data. Chạy index script trong README trước.")
+        # Thử lấy collection cũ 'day09_docs' nếu có
+        try:
+            collection = client.get_collection("day09_docs")
+            print("⚠️  Using legacy collection 'day09_docs'. Run build_index.py to rebuild.")
+        except Exception:
+            collection = client.get_or_create_collection(
+                "rag_lab",
+                metadata={"hnsw:space": "cosine"}
+            )
+            print("⚠️  Collection 'rag_lab' chưa có data. Chạy: python build_index.py")
     return collection
 
 

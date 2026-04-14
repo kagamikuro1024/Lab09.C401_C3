@@ -31,16 +31,15 @@ WORKER_NAME = "policy_tool_worker"
 
 def _call_mcp_tool(tool_name: str, tool_input: dict) -> dict:
     """
-    Gọi MCP tool.
+    Gọi MCP tool thông qua FastMCP server (Sprint 3).
 
-    Sprint 3 TODO: Implement bằng cách import mcp_server hoặc gọi HTTP.
-
-    Hiện tại: Import trực tiếp từ mcp_server.py (trong-process mock).
+    Sử dụng dispatch_tool() từ mcp_server.py (FastMCP backend).
+    Server thật chạy với stdio transport, nhưng trong-process call
+    qua dispatch_tool() cho performance trong lab.
     """
     from datetime import datetime
 
     try:
-        # TODO Sprint 3: Thay bằng real MCP client nếu dùng HTTP server
         from mcp_server import dispatch_tool
         result = dispatch_tool(tool_name, tool_input)
         return {
@@ -48,6 +47,7 @@ def _call_mcp_tool(tool_name: str, tool_input: dict) -> dict:
             "input": tool_input,
             "output": result,
             "error": None,
+            "mcp_server": "FastMCP (day09-internal-kb)",
             "timestamp": datetime.now().isoformat(),
         }
     except Exception as e:
@@ -56,6 +56,7 @@ def _call_mcp_tool(tool_name: str, tool_input: dict) -> dict:
             "input": tool_input,
             "output": None,
             "error": {"code": "MCP_CALL_FAILED", "reason": str(e)},
+            "mcp_server": "FastMCP (day09-internal-kb)",
             "timestamp": datetime.now().isoformat(),
         }
 
@@ -202,6 +203,24 @@ def run(state: dict) -> dict:
             state["mcp_tools_used"].append(mcp_result)
             state["history"].append(f"[{WORKER_NAME}] called MCP get_ticket_info")
 
+        # Step 4 (Sprint 3): Nếu liên quan access/permission → gọi MCP check_access_permission
+        if needs_tool and any(kw in task.lower() for kw in ["level 3", "level 2", "cấp quyền", "access", "admin access"]):
+            # Detect access level từ task
+            access_level = 3 if "level 3" in task.lower() or "admin" in task.lower() else 2
+            is_emergency = any(kw in task.lower() for kw in ["khẩn cấp", "emergency", "p1"])
+            requester_role = "contractor" if "contractor" in task.lower() else "employee"
+
+            mcp_result = _call_mcp_tool("check_access_permission", {
+                "access_level": access_level,
+                "requester_role": requester_role,
+                "is_emergency": is_emergency,
+            })
+            state["mcp_tools_used"].append(mcp_result)
+            state["history"].append(
+                f"[{WORKER_NAME}] called MCP check_access_permission "
+                f"(level={access_level}, emergency={is_emergency})"
+            )
+
         worker_io["output"] = {
             "policy_applies": policy_result["policy_applies"],
             "exceptions_count": len(policy_result.get("exceptions_found", [])),
@@ -209,7 +228,8 @@ def run(state: dict) -> dict:
         }
         state["history"].append(
             f"[{WORKER_NAME}] policy_applies={policy_result['policy_applies']}, "
-            f"exceptions={len(policy_result.get('exceptions_found', []))}"
+            f"exceptions={len(policy_result.get('exceptions_found', []))}, "
+            f"mcp_tools={len(state['mcp_tools_used'])}"
         )
 
     except Exception as e:

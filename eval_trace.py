@@ -21,6 +21,10 @@ import argparse
 from datetime import datetime
 from typing import Optional
 
+if sys.platform == "win32":
+    import sys
+    sys.stdout.reconfigure(encoding='utf-8')
+
 # Import graph
 sys.path.insert(0, os.path.dirname(__file__))
 from graph import run_graph, save_trace
@@ -185,7 +189,7 @@ def analyze_traces(traces_dir: str = "artifacts/traces") -> dict:
 
     traces = []
     for fname in trace_files:
-        with open(os.path.join(traces_dir, fname)) as f:
+        with open(os.path.join(traces_dir, fname), encoding="utf-8") as f:
             traces.append(json.load(f))
 
     # Compute metrics

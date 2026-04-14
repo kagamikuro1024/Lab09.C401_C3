@@ -1,0 +1,143 @@
+{
+  "task": "Store credit khi hoàn tiền có giá trị bao nhiêu so với tiền gốc?",
+  "route_reason": "policy/access keyword detected: ['hoàn tiền']",
+  "risk_high": false,
+  "needs_tool": true,
+  "hitl_triggered": false,
+  "retrieved_chunks": [
+    {
+      "text": "- Hoàn tiền qua phương thức thanh toán gốc: áp dụng trong 100% trường hợp đủ điều kiện.\n- Hoàn tiền qua credit nội bộ (store credit): khách hàng có thể chọn nhận store credit thay thế với giá trị 110% so với số tiền hoàn.",
+      "source": "policy/refund-v4.pdf",
+      "score": 0.6471,
+      "metadata": {
+        "access": "internal",
+        "section": "Điều 5: Hình thức hoàn tiền",
+        "source": "policy/refund-v4.pdf",
+        "effective_date": "2026-02-01",
+        "department": "CS"
+      }
+    },
+    {
+      "text": "Hoàn tiền — Điều kiện áp dụng:\nYêu cầu được gửi trong vòng 7 ngày kể từ thời điểm xác nhận đơn hàng.\n\nNgoại lệ không được hoàn tiền:\n- Sản phẩm thuộc danh mục hàng kỹ thuật số (license key, subscription).\n- Đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale.\n- Sản phẩm đã được kích hoạt hoặc đăng ký tài khoản.",
+      "source": "policy/refund-v4.pdf",
+      "score": 0.4394,
+      "metadata": {
+        "source": "policy/refund-v4.pdf",
+        "effective_date": "2026-02-01",
+        "department": "CS",
+        "section": "Điều 3: Điều kiện áp dụng và ngoại lệ",
+        "access": "internal"
+      }
+    },
+    {
+      "text": "Chính sách này áp dụng cho tất cả các đơn hàng được đặt trên hệ thống nội bộ kể từ ngày 01/02/2026.\nCác đơn hàng đặt trước ngày có hiệu lực sẽ áp dụng theo chính sách hoàn tiền phiên bản 3.",
+      "source": "policy/refund-v4.pdf",
+      "score": 0.3878,
+      "metadata": {
+        "section": "Điều 1: Phạm vi áp dụng",
+        "source": "policy/refund-v4.pdf",
+        "department": "CS",
+        "effective_date": "2026-02-01",
+        "access": "internal"
+      }
+    }
+  ],
+  "retrieved_sources": [
+    "policy/refund-v4.pdf"
+  ],
+  "policy_result": {
+    "policy_applies": false,
+    "policy_name": "refund_policy_v4",
+    "exceptions_found": [
+      {
+        "type": "flash_sale_exception",
+        "rule": "Đơn hàng Flash Sale không được hoàn tiền (Điều 3, chính sách v4).",
+        "source": "policy_refund_v4.txt"
+      }
+    ],
+    "source": [
+      "policy/refund-v4.pdf"
+    ],
+    "policy_version_note": "",
+    "explanation": "Dựa vào context đã cung cấp, chúng ta có thể xác định chính sách hoàn tiền (policy) như sau:\n\n### Chính sách hoàn tiền (Policy):\n1. **Phương thức hoàn tiền**:\n   - **Hoàn tiền qua phương thức thanh toán gốc**: Áp dụng trong 100% trường hợp đủ điều kiện.\n   - **Hoàn tiền qua credit nội bộ (store credit)**: Khách hàng có thể chọn nhận store credit thay thế với giá trị 110% so với số tiền hoàn.\n\n### Điều kiện áp dụng:\n- Yêu cầu hoàn tiền phải được gửi trong vòng 7 ngày kể từ thời điểm xác nhận đơn hàng.\n\n### Ngoại lệ không được hoàn tiền:\nCác trường hợp sẽ không được hoàn tiền:\n1. Sản phẩm thuộc danh mục hàng kỹ thuật số (license key, subscription).\n2. Đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale.\n3. Sản phẩm đã được kích hoạt hoặc đăng ký tài khoản.\n\n### Thời gian hiệu lực:\n- Chính sách này áp dụng cho tất cả các đơn hàng được đặt trên hệ thống nội bộ kể từ ngày 01/02/2026.\n- Các đơn hàng đặt trước ngày có hiệu lực sẽ áp dụng theo chính sách hoàn tiền phiên bản 3.\n\n### Tổng kết:\nKhách hàng có thể nhận hoàn tiền bằng tiền gốc hoặc store credit với giá trị cao hơn (110% số tiền hoàn) nếu đủ điều kiện. Tuy nhiên, có một số ngoại lệ mà không được hoàn tiền. Chính sách này có hiệu lực từ một ngày cụ thể và sẽ không áp dụng cho các đơn hàng trước thời gian đó."
+  },
+  "mcp_tools_used": [
+    {
+      "tool": "search_kb",
+      "input": {
+        "query": "Store credit khi hoàn tiền có giá trị bao nhiêu so với tiền gốc?",
+        "top_k": 3
+      },
+      "output": {
+        "chunks": [
+          {
+            "text": "- Hoàn tiền qua phương thức thanh toán gốc: áp dụng trong 100% trường hợp đủ điều kiện.\n- Hoàn tiền qua credit nội bộ (store credit): khách hàng có thể chọn nhận store credit thay thế với giá trị 110% so với số tiền hoàn.",
+            "source": "policy/refund-v4.pdf",
+            "score": 0.647,
+            "metadata": {
+              "source": "policy/refund-v4.pdf",
+              "department": "CS",
+              "section": "Điều 5: Hình thức hoàn tiền",
+              "effective_date": "2026-02-01",
+              "access": "internal"
+            }
+          },
+          {
+            "text": "Hoàn tiền — Điều kiện áp dụng:\nYêu cầu được gửi trong vòng 7 ngày kể từ thời điểm xác nhận đơn hàng.\n\nNgoại lệ không được hoàn tiền:\n- Sản phẩm thuộc danh mục hàng kỹ thuật số (license key, subscription).\n- Đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale.\n- Sản phẩm đã được kích hoạt hoặc đăng ký tài khoản.",
+            "source": "policy/refund-v4.pdf",
+            "score": 0.4394,
+            "metadata": {
+              "source": "policy/refund-v4.pdf",
+              "access": "internal",
+              "section": "Điều 3: Điều kiện áp dụng và ngoại lệ",
+              "effective_date": "2026-02-01",
+              "department": "CS"
+            }
+          },
+          {
+            "text": "Chính sách này áp dụng cho tất cả các đơn hàng được đặt trên hệ thống nội bộ kể từ ngày 01/02/2026.\nCác đơn hàng đặt trước ngày có hiệu lực sẽ áp dụng theo chính sách hoàn tiền phiên bản 3.",
+            "source": "policy/refund-v4.pdf",
+            "score": 0.3878,
+            "metadata": {
+              "department": "CS",
+              "source": "policy/refund-v4.pdf",
+              "access": "internal",
+              "section": "Điều 1: Phạm vi áp dụng",
+              "effective_date": "2026-02-01"
+            }
+          }
+        ],
+        "sources": [
+          "policy/refund-v4.pdf"
+        ],
+        "total_found": 3
+      },
+      "error": null,
+      "mcp_server": "FastMCP (day09-internal-kb)",
+      "timestamp": "2026-04-14T16:04:14.395997"
+    }
+  ],
+  "final_answer": "Store credit khi hoàn tiền có giá trị 110% so với số tiền gốc. Khách hàng có thể chọn nhận store credit thay thế trong trường hợp đủ điều kiện hoàn tiền [1].",
+  "sources": [
+    "policy/refund-v4.pdf"
+  ],
+  "confidence": 0.44,
+  "history": [
+    "[supervisor] received task: Store credit khi hoàn tiền có giá trị bao nhiêu so với tiền gốc?",
+    "[supervisor] DECISION: route=policy_tool_worker | needs_tool=True | risk_high=False | reason=policy/access keyword detected: ['hoàn tiền']",
+    "[policy_tool_worker] called MCP search_kb",
+    "[policy_tool_worker] policy_applies=False, exceptions=1, mcp_tools=1",
+    "[retrieval_worker] retrieved 3 chunks from ['policy/refund-v4.pdf']",
+    "[synthesis_worker] answer generated, confidence=0.44, sources=['policy/refund-v4.pdf']",
+    "[graph] completed in 11367ms"
+  ],
+  "workers_called": [
+    "policy_tool_worker",
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "policy_tool_worker",
+  "latency_ms": 11367,
+  "run_id": "run_20260414_160413_804235",
+  "question_id": "q10"
+}
