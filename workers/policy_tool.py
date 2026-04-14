@@ -208,6 +208,20 @@ def run(state: dict) -> dict:
             f"exceptions={len(policy_result.get('exceptions_found', []))}"
         )
 
+        if needs_tool and any(kw in task.lower() for kw in ["level 2", "level 3", "level 1", "access level"]):
+            import re
+            level_match = re.search(r"level\s*(\d)", task.lower())
+            if level_match:
+                level = int(level_match.group(1))
+                mcp_result = _call_mcp_tool("check_access_permission", {
+                    "access_level": level,
+                    "requester_role": "contractor",
+                    "is_emergency": "khẩn cấp" in task.lower() or "emergency" in task.lower()
+                })
+                state["mcp_tools_used"].append(mcp_result)
+                state["history"].append(f"[{WORKER_NAME}] called MCP check_access_permission(level={level})")
+
+
     except Exception as e:
         worker_io["error"] = {"code": "POLICY_CHECK_FAILED", "reason": str(e)}
         state["policy_result"] = {"error": str(e)}
@@ -247,7 +261,22 @@ if __name__ == "__main__":
         },
     ]
 
-    for tc in test_cases:
+    test_cases_2 = [
+        {
+            "task": "Khách hàng Flash Sale yêu cầu hoàn tiền vì sản phẩm lỗi — được không?",
+            "needs_tool": True
+        },
+        {
+            "task": "Khách hàng muốn hoàn tiền license key đã kích hoạt.",
+            "needs_tool": True
+        },
+        {
+            "task": "Khách hàng yêu cầu hoàn tiền trong 5 ngày, sản phẩm lỗi, chưa kích hoạt.",
+            "needs_tool": True
+        },
+    ]
+
+    for tc in test_cases_2:
         print(f"\n▶ Task: {tc['task'][:70]}...")
         result = run(tc.copy())
         pr = result.get("policy_result", {})
@@ -256,5 +285,6 @@ if __name__ == "__main__":
             for ex in pr["exceptions_found"]:
                 print(f"  exception: {ex['type']} — {ex['rule'][:60]}...")
         print(f"  MCP calls: {len(result.get('mcp_tools_used', []))}")
+        print(f"  Tool: {result.get('mcp_tools_used', [])}")
 
     print("\n✅ policy_tool_worker test done.")
