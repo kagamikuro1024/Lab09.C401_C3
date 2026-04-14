@@ -100,7 +100,7 @@ def supervisor_node(state: AgentState) -> AgentState:
     - ERR- + risk_high      → human_review
     - Default               → retrieval_worker
 
-    Author: NguyenVanNghia (Supervisor Owner) | LeVanQuangTrung (Tech Lead)
+    Author: HoangDucNghia (Supervisor Owner) | LeVanQuangTrung (Tech Lead)
     """
     task = state["task"].lower()
     state["history"].append(f"[supervisor] received task: {state['task'][:80]}")
