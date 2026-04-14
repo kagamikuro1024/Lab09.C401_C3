@@ -17,6 +17,8 @@ Gọi độc lập để test:
 
 import os
 import sys
+from dotenv import load_dotenv
+load_dotenv()
 
 # ─────────────────────────────────────────────
 # Worker Contract (xem contracts/worker_contracts.yaml)
@@ -30,35 +32,37 @@ DEFAULT_TOP_K = 3
 
 def _get_embedding_fn():
     """
-    Trả về embedding function.
-    TODO Sprint 1: Implement dùng OpenAI hoặc Sentence Transformers.
+    Trả về embedding function dựa vào .env hoặc fallback.
     """
-    # Option A: Sentence Transformers (offline, không cần API key)
+    provider = os.getenv("EMBEDDING_PROVIDER", "openai").lower()
+
+    if provider == "openai":
+        try:
+            from openai import OpenAI
+            client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+            def embed(text: str) -> list:
+                resp = client.embeddings.create(input=text, model=os.getenv("EMBEDDING_MODEL", "text-embedding-3-small"))
+                return resp.data[0].embedding
+            return embed
+        except Exception as e:
+            print(f"⚠️  OpenAI Embedding failed: {e}. Falling back...")
+
+    # Option B: Sentence Transformers
     try:
         from sentence_transformers import SentenceTransformer
-        model = SentenceTransformer("all-MiniLM-L6-v2")
+        model_name = os.getenv("LOCAL_EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+        model = SentenceTransformer(model_name)
         def embed(text: str) -> list:
             return model.encode([text])[0].tolist()
         return embed
-    except ImportError:
+    except Exception:
         pass
 
-    # Option B: OpenAI (cần API key)
-    try:
-        from openai import OpenAI
-        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        def embed(text: str) -> list:
-            resp = client.embeddings.create(input=text, model="text-embedding-3-small")
-            return resp.data[0].embedding
-        return embed
-    except ImportError:
-        pass
-
-    # Fallback: random embeddings cho test (KHÔNG dùng production)
+    # Fallback: random embeddings cho test
     import random
     def embed(text: str) -> list:
-        return [random.random() for _ in range(384)]
-    print("⚠️  WARNING: Using random embeddings (test only). Install sentence-transformers.")
+        return [random.random() for _ in range(1536)]
+    print("⚠️  WARNING: Using random embeddings (test only).")
     return embed
 
 
@@ -184,6 +188,11 @@ def run(state: dict) -> dict:
 # ─────────────────────────────────────────────
 
 if __name__ == "__main__":
+    import sys
+    # Đặt UTF-8 để hỗ trợ in tiếng Việt trên Windows
+    if sys.stdout.encoding != 'utf-8':
+        sys.stdout.reconfigure(encoding='utf-8')
+
     print("=" * 50)
     print("Retrieval Worker — Standalone Test")
     print("=" * 50)

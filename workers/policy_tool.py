@@ -19,6 +19,8 @@ Gọi độc lập để test:
 import os
 import sys
 from typing import Optional
+from dotenv import load_dotenv
+load_dotenv()
 
 WORKER_NAME = "policy_tool_worker"
 
@@ -118,17 +120,19 @@ def analyze_policy(task: str, chunks: list) -> dict:
         policy_version_note = "Đơn hàng đặt trước 01/02/2026 áp dụng chính sách v3 (không có trong tài liệu hiện tại)."
 
     # TODO Sprint 2: Gọi LLM để phân tích phức tạp hơn
-    # Ví dụ:
-    # from openai import OpenAI
-    # client = OpenAI()
-    # response = client.chat.completions.create(
-    #     model="gpt-4o-mini",
-    #     messages=[
-    #         {"role": "system", "content": "Bạn là policy analyst. Dựa vào context, xác định policy áp dụng và các exceptions."},
-    #         {"role": "user", "content": f"Task: {task}\n\nContext:\n" + "\n".join([c['text'] for c in chunks])}
-    #     ]
-    # )
-    # analysis = response.choices[0].message.content
+    from openai import OpenAI
+    try:
+        client = OpenAI()
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Bạn là policy analyst. Dựa vào context, xác định policy áp dụng và các exceptions."},
+                {"role": "user", "content": f"Task: {task}\n\nContext:\n" + "\n".join([str(c.get('text', '')) for c in chunks])}
+            ]
+        )
+        analysis = response.choices[0].message.content
+    except Exception as e:
+        analysis = f"LLM error: {e}"
 
     sources = list({c.get("source", "unknown") for c in chunks if c})
 
@@ -138,7 +142,7 @@ def analyze_policy(task: str, chunks: list) -> dict:
         "exceptions_found": exceptions_found,
         "source": sources,
         "policy_version_note": policy_version_note,
-        "explanation": "Analyzed via rule-based policy check. TODO: upgrade to LLM-based analysis.",
+        "explanation": analysis,
     }
 
 
@@ -222,6 +226,11 @@ def run(state: dict) -> dict:
 # ─────────────────────────────────────────────
 
 if __name__ == "__main__":
+    import sys
+    # Đặt UTF-8 để hỗ trợ in tiếng Việt trên Windows
+    if sys.stdout.encoding != 'utf-8':
+        sys.stdout.reconfigure(encoding='utf-8')
+
     print("=" * 50)
     print("Policy Tool Worker — Standalone Test")
     print("=" * 50)

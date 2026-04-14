@@ -36,6 +36,8 @@ def _call_llm(messages: list) -> str:
     Gọi LLM để tổng hợp câu trả lời.
     TODO Sprint 2: Implement với OpenAI hoặc Gemini.
     """
+    from dotenv import load_dotenv
+    load_dotenv()
     # Option A: OpenAI
     try:
         from openai import OpenAI
@@ -203,6 +205,11 @@ def run(state: dict) -> dict:
 # ─────────────────────────────────────────────
 
 if __name__ == "__main__":
+    import sys
+    # Đặt UTF-8 để hỗ trợ in tiếng Việt trên Windows
+    if sys.stdout.encoding != 'utf-8':
+        sys.stdout.reconfigure(encoding='utf-8')
+
     print("=" * 50)
     print("Synthesis Worker — Standalone Test")
     print("=" * 50)

@@ -237,9 +237,9 @@ def human_review_node(state: AgentState) -> AgentState:
 # Sprint 2: Uncomment imports bên dưới và thay nội dung các node
 
 # --- Uncomment sau Sprint 2 ---
-# from workers.retrieval import run as retrieval_run
-# from workers.policy_tool import run as policy_tool_run
-# from workers.synthesis import run as synthesis_run
+from workers.retrieval import run as retrieval_run
+from workers.policy_tool import run as policy_tool_run
+from workers.synthesis import run as synthesis_run
 
 
 def retrieval_worker_node(state: AgentState) -> AgentState:
@@ -252,7 +252,7 @@ def retrieval_worker_node(state: AgentState) -> AgentState:
     Author: Dat (Worker Owner)
     """
     # --- Sprint 2: Thay bằng dòng sau ---
-    # return retrieval_run(state)
+    return retrieval_run(state)
 
     state["workers_called"].append("retrieval_worker")
     state["history"].append("[retrieval_worker] called")
@@ -299,7 +299,7 @@ def policy_tool_worker_node(state: AgentState) -> AgentState:
     Author: Dat (Worker Owner) | Vinh (MCP Owner)
     """
     # --- Sprint 2: Thay bằng dòng sau ---
-    # return policy_tool_run(state)
+    return policy_tool_run(state)
 
     state["workers_called"].append("policy_tool_worker")
     state["history"].append("[policy_tool_worker] called")
@@ -345,7 +345,7 @@ def synthesis_worker_node(state: AgentState) -> AgentState:
     Author: Dat (Worker Owner)
     """
     # --- Sprint 2: Thay bằng dòng sau ---
-    # return synthesis_run(state)
+    return synthesis_run(state)
 
     state["workers_called"].append("synthesis_worker")
     state["history"].append("[synthesis_worker] called")
