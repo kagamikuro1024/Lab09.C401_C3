@@ -29,7 +29,7 @@
     "[retrieval_worker] retrieved 1 chunks from ['it_helpdesk_faq.txt']",
     "[synthesis_worker] called",
     "[synthesis_worker] generated answer, confidence=0.7, sources=['it_helpdesk_faq.txt']",
-    "[graph] completed in 2ms"
+    "[graph] completed in 1ms"
   ],
   "workers_called": [
     "human_review",
@@ -37,6 +37,6 @@
     "synthesis_worker"
   ],
   "supervisor_route": "human_review",
-  "latency_ms": 2,
-  "run_id": "run_20260414_150241"
+  "latency_ms": 1,
+  "run_id": "run_20260414_150703_728952"
 }
