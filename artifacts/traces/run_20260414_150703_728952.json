@@ -1,12 +1,12 @@
 {
-  "task": "He thong bao loi ERR-4092 khong ro nguyen nhan - phai lam gi?",
+  "task": "Hệ thống báo lỗi ERR-4092 không rõ nguyên nhân — phải làm gì?",
   "route_reason": "unknown error code (err-) + risk_high → human review required | human approved → retrieval_worker",
   "risk_high": true,
   "needs_tool": false,
   "hitl_triggered": true,
   "retrieved_chunks": [
     {
-      "text": "[PLACEHOLDER] Kết quả tìm kiếm cho: He thong bao loi ERR-4092 khong ro nguyen nhan - phai lam gi",
+      "text": "[PLACEHOLDER] Kết quả tìm kiếm cho: Hệ thống báo lỗi ERR-4092 không rõ nguyên nhân — phải làm gì",
       "source": "it_helpdesk_faq.txt",
       "score": 0.7
     }
@@ -16,20 +16,20 @@
   ],
   "policy_result": {},
   "mcp_tools_used": [],
-  "final_answer": "[PLACEHOLDER — Sprint 2 sẽ gọi LLM thật]\nDựa vào 1 chunks từ [it_helpdesk_faq.txt]:\n[PLACEHOLDER] Kết quả tìm kiếm cho: He thong bao loi ERR-4092 khong ro nguyen nhan - phai lam gi...",
+  "final_answer": "[PLACEHOLDER — Sprint 2 sẽ gọi LLM thật]\nDựa vào 1 chunks từ [it_helpdesk_faq.txt]:\n[PLACEHOLDER] Kết quả tìm kiếm cho: Hệ thống báo lỗi ERR-4092 không rõ nguyên nhân — phải làm gì...",
   "sources": [
     "it_helpdesk_faq.txt"
   ],
   "confidence": 0.7,
   "history": [
-    "[supervisor] received task: He thong bao loi ERR-4092 khong ro nguyen nhan - phai lam gi?",
+    "[supervisor] received task: Hệ thống báo lỗi ERR-4092 không rõ nguyên nhân — phải làm gì?",
     "[supervisor] DECISION: route=human_review | needs_tool=False | risk_high=True | reason=unknown error code (err-) + risk_high → human review required",
     "[human_review] HITL triggered — awaiting human input",
     "[retrieval_worker] called",
     "[retrieval_worker] retrieved 1 chunks from ['it_helpdesk_faq.txt']",
     "[synthesis_worker] called",
     "[synthesis_worker] generated answer, confidence=0.7, sources=['it_helpdesk_faq.txt']",
-    "[graph] completed in 2ms"
+    "[graph] completed in 1ms"
   ],
   "workers_called": [
     "human_review",
@@ -37,6 +37,6 @@
     "synthesis_worker"
   ],
   "supervisor_route": "human_review",
-  "latency_ms": 2,
-  "run_id": "run_20260414_143429"
+  "latency_ms": 1,
+  "run_id": "run_20260414_150703_728952"
 }

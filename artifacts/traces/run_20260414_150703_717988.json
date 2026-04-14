@@ -1,0 +1,45 @@
+{
+  "task": "SLA xử lý ticket P1 là bao lâu?",
+  "route_reason": "SLA/ticket keyword detected: ['p1', 'sla', 'ticket']",
+  "risk_high": false,
+  "needs_tool": false,
+  "hitl_triggered": false,
+  "retrieved_chunks": [
+    {
+      "text": "Ticket P1: Phản hồi ban đầu 15 phút. Xử lý trong 4 giờ. Nếu không phản hồi sau 10 phút → tự động escalate lên Senior Engineer.",
+      "source": "sla_p1_2026.txt",
+      "score": 0.93
+    },
+    {
+      "text": "Escalation path: L1 Support → Senior Engineer → Engineering Manager → CTO nếu vượt SLA.",
+      "source": "sla_p1_2026.txt",
+      "score": 0.88
+    }
+  ],
+  "retrieved_sources": [
+    "sla_p1_2026.txt"
+  ],
+  "policy_result": {},
+  "mcp_tools_used": [],
+  "final_answer": "[PLACEHOLDER — Sprint 2 sẽ gọi LLM thật]\nDựa vào 2 chunks từ [sla_p1_2026.txt]:\nTicket P1: Phản hồi ban đầu 15 phút. Xử lý trong 4 giờ. Nếu không phản hồi sau 10 phút → tự động escalate lên Senior Engineer....",
+  "sources": [
+    "sla_p1_2026.txt"
+  ],
+  "confidence": 0.91,
+  "history": [
+    "[supervisor] received task: SLA xử lý ticket P1 là bao lâu?",
+    "[supervisor] DECISION: route=retrieval_worker | needs_tool=False | risk_high=False | reason=SLA/ticket keyword detected: ['p1', 'sla', 'ticket']",
+    "[retrieval_worker] called",
+    "[retrieval_worker] retrieved 2 chunks from ['sla_p1_2026.txt']",
+    "[synthesis_worker] called",
+    "[synthesis_worker] generated answer, confidence=0.91, sources=['sla_p1_2026.txt']",
+    "[graph] completed in 3ms"
+  ],
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "retrieval_worker",
+  "latency_ms": 3,
+  "run_id": "run_20260414_150703_717988"
+}
