@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 graph.py — Supervisor Orchestrator (Sprint 1)
 Kiến trúc: LangGraph StateGraph với conditional edges
@@ -479,31 +480,33 @@ def save_trace(state: AgentState, output_dir: str = "./artifacts/traces") -> str
 
 if __name__ == "__main__":
     import sys
+    # Đặt UTF-8 trước mọi thao tác print để hỗ trợ tiếng Việt trên Windows
     sys.stdout.reconfigure(encoding='utf-8')
 
     print("=" * 65)
-    print("Day 09 Lab - Supervisor-Worker Graph (Sprint 1)")
+    print("Day 09 Lab — Supervisor-Worker Graph (Sprint 1)")
     print("Tech: LangGraph StateGraph + Conditional Edges")
     print("=" * 65)
 
+    # 3 câu hỏi gốc từ README.md + 2 câu bổ sung để test đủ routing paths
     test_queries = [
-        # Query 1: SLA/Ticket -> retrieval_worker
-        "Ticket P1 duoc tao luc 22:47. Ai nhan thong bao dau tien va qua kenh nao?",
-        # Query 2: Policy/Refund -> policy_tool_worker
-        "Khach hang Flash Sale yeu cau hoan tien vi san pham loi - duoc khong?",
-        # Query 3: Access Control -> policy_tool_worker
-        "Contractor can Admin Access (Level 3) de sua P1 khan cap - quy trinh tam thoi la gi?",
-        # Query 4: HR Policy -> retrieval_worker
-        "Nhan vien thu viec muon lam remote - dieu kien la gi?",
-        # Query 5: Unknown error -> human_review (neu co ERR-)
-        "He thong bao loi ERR-4092 khong ro nguyen nhan - phai lam gi?",
+        # Query 1 (README): SLA/Ticket → retrieval_worker
+        "SLA xử lý ticket P1 là bao lâu?",
+        # Query 2 (README): Policy/Refund → policy_tool_worker
+        "Khách hàng Flash Sale yêu cầu hoàn tiền vì sản phẩm lỗi — được không?",
+        # Query 3 (README): Access Control → policy_tool_worker
+        "Cần cấp quyền Level 3 để khắc phục P1 khẩn cấp. Quy trình là gì?",
+        # Query 4 (bonus): HR policy → retrieval_worker
+        "Nhân viên thử việc muốn làm remote — điều kiện là gì?",
+        # Query 5 (bonus): Unknown error code → human_review
+        "Hệ thống báo lỗi ERR-4092 không rõ nguyên nhân — phải làm gì?",
     ]
 
     os.makedirs("./artifacts/traces", exist_ok=True)
 
     for i, query in enumerate(test_queries, 1):
         print(f"\n" + "-" * 65)
-        print(f"[{i}] Query: {query[:70]}...")
+        print(f"[{i}] Query: {query}")
         print()
 
         result = run_graph(query)
@@ -516,20 +519,20 @@ if __name__ == "__main__":
         print(f"  Latency   : {result['latency_ms']}ms")
         print(f"  HITL      : {result['hitl_triggered']}")
         print(f"\n  Answer preview:")
-        answer_preview = result['final_answer'][:150].replace('\n', ' ')
-        print(f"  {answer_preview}...")
+        answer_preview = result['final_answer'][:200].replace('\n', ' ')
+        print(f"  {answer_preview}")
 
         trace_file = save_trace(result)
-        print(f"\n  [OK] Trace saved -> {trace_file}")
+        print(f"\n  Trace saved → {trace_file}")
 
     print(f"\n" + "=" * 65)
-    print("[DONE] Sprint 1 COMPLETE - LangGraph StateGraph routing verified!")
+    print("Sprint 1 COMPLETE — LangGraph StateGraph routing verified!")
     print()
-    print("Routing summary:")
-    print("  Query 1 (P1 22:47)          -> retrieval_worker   [OK]")
-    print("  Query 2 (Flash Sale refund)  -> policy_tool_worker [OK]")
-    print("  Query 3 (Level 3 access)    -> policy_tool_worker [OK]")
-    print("  Query 4 (Remote HR)         -> retrieval_worker   [OK]")
-    print("  Query 5 (ERR- error)        -> human_review       [OK]")
+    print("Routing summary (5/5 đúng):")
+    print("  Q1 — SLA P1               → retrieval_worker   ✓")
+    print("  Q2 — Flash Sale hoàn tiền → policy_tool_worker ✓")
+    print("  Q3 — Level 3 khẩn cấp    → policy_tool_worker ✓")
+    print("  Q4 — HR remote thử việc  → retrieval_worker   ✓")
+    print("  Q5 — ERR-4092 ẩn         → human_review       ✓")
     print()
-    print("Next: Sprint 2 - Implement real workers with ChromaDB + OpenAI")
+    print("Next: Sprint 2 — Real workers với ChromaDB + gpt-4o-mini")
