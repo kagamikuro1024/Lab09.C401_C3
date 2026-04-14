@@ -314,7 +314,7 @@ def build_index(docs_dir: Path = DOCS_DIR, db_dir: Path = CHROMA_DB_DIR) -> None
     # Khởi tạo ChromaDB
     client = chromadb.PersistentClient(path=str(db_dir))
     collection = client.get_or_create_collection(
-        name="rag_lab",
+        name="day09_docs",
         metadata={"hnsw:space": "cosine"}
     )
 

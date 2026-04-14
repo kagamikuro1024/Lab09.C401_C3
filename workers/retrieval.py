@@ -31,38 +31,14 @@ DEFAULT_TOP_K = 3
 
 
 def _get_embedding_fn():
-    """
-    Trả về embedding function dựa vào .env hoặc fallback.
-    """
-    provider = os.getenv("EMBEDDING_PROVIDER", "openai").lower()
-
-    if provider == "openai":
-        try:
-            from openai import OpenAI
-            client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-            def embed(text: str) -> list:
-                resp = client.embeddings.create(input=text, model=os.getenv("EMBEDDING_MODEL", "text-embedding-3-small"))
-                return resp.data[0].embedding
-            return embed
-        except Exception as e:
-            print(f"⚠️  OpenAI Embedding failed: {e}. Falling back...")
-
-    # Option B: Sentence Transformers
-    try:
-        from sentence_transformers import SentenceTransformer
-        model_name = os.getenv("LOCAL_EMBEDDING_MODEL", "all-MiniLM-L6-v2")
-        model = SentenceTransformer(model_name)
-        def embed(text: str) -> list:
-            return model.encode([text])[0].tolist()
-        return embed
-    except Exception:
-        pass
-
-    # Fallback: random embeddings cho test
-    import random
+    from openai import OpenAI
+    import os
+    from dotenv import load_dotenv
+    load_dotenv()
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     def embed(text: str) -> list:
-        return [random.random() for _ in range(1536)]
-    print("⚠️  WARNING: Using random embeddings (test only).")
+        resp = client.embeddings.create(input=text, model="text-embedding-3-small")
+        return resp.data[0].embedding
     return embed
 
 
