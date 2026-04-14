@@ -1,0 +1,326 @@
+====================================================================================================
+GRADING QUESTIONS EXECUTION RESULTS — LAB DAY 09
+====================================================================================================
+
+
+====================================================================================================
+[1/10] GQ01 — SLA xử lý ticket P1 đã thay đổi như thế nào so với phiên bản trước?
+====================================================================================================
+
+📌 ROUTING & PERFORMANCE:
+  Supervisor Route: retrieval_worker
+  Route Reason: SLA/ticket keyword detected: ['p1', 'sla', 'ticket']
+  Confidence Score: 0.5 (MEDIUM)
+  Latency: 6105.0ms
+  Timestamp: 2026-04-14T17:49:57.027587
+
+🔧 WORKERS & MCP:
+  Workers Called: retrieval_worker → synthesis_worker
+  MCP Tools Used: None
+  HITL Triggered: False
+
+📄 SOURCES:
+    • support/sla-p1-2026.pdf
+
+💬 SYNTHESIS OUTPUT:
+  SLA xử lý ticket P1 đã thay đổi từ phiên bản trước như sau:
+
+1. Thời gian xử lý và khắc phục (resolution) đã giảm từ 6 giờ xuống 4 giờ trong phiên bản v2026.1 (2026-01-15) [1].
+2. Thêm quy trình escalation tự động trong phiên bản v2025.3 (2025-09-01) [1].
+
+Tóm lại, sự thay đổi chính là thời gian xử ...
+
+====================================================================================================
+[2/10] GQ02 — Khi làm việc remote, tôi phải dùng VPN và được kết nối trên tối đa bao nhiêu thi
+====================================================================================================
+
+📌 ROUTING & PERFORMANCE:
+  Supervisor Route: retrieval_worker
+  Route Reason: HR policy keyword detected: ['remote']
+  Confidence Score: 0.57 (HIGH)
+  Latency: 2078.0ms
+  Timestamp: 2026-04-14T17:49:59.106262
+
+🔧 WORKERS & MCP:
+  Workers Called: retrieval_worker → synthesis_worker
+  MCP Tools Used: None
+  HITL Triggered: False
+
+📄 SOURCES:
+    • support/helpdesk-faq.md
+    • hr/leave-policy-2026.pdf
+    • it/access-control-sop.md
+
+💬 SYNTHESIS OUTPUT:
+  Khi làm việc remote, bạn phải sử dụng VPN và mỗi tài khoản được kết nối trên tối đa 2 thiết bị cùng lúc. [1]
+
+====================================================================================================
+[3/10] GQ03 — Đơn hàng mua trong chương trình Flash Sale và đã kích hoạt sản phẩm có được hoàn
+====================================================================================================
+
+📌 ROUTING & PERFORMANCE:
+  Supervisor Route: policy_tool_worker
+  Route Reason: policy/access keyword detected: ['hoàn tiền', 'flash sale']
+  Confidence Score: 0.45 (MEDIUM)
+  Latency: 11533.0ms
+  Timestamp: 2026-04-14T17:50:10.639374
+
+🔧 WORKERS & MCP:
+  Workers Called: policy_tool_worker → retrieval_worker → synthesis_worker
+  MCP Tools Used: ['search_kb']
+  HITL Triggered: False
+
+📄 SOURCES:
+    • policy/refund-v4.pdf
+
+💬 SYNTHESIS OUTPUT:
+  Đơn hàng mua trong chương trình Flash Sale và đã kích hoạt sản phẩm sẽ không được hoàn tiền. 
+
+Cụ thể:
+- Đơn hàng Flash Sale không được hoàn tiền theo chính sách [1].
+- Sản phẩm đã kích hoạt cũng không đủ điều kiện hoàn tiền [1].
+
+Tóm lại, không đủ điều kiện hoàn tiền trong trường hợp này.
+
+====================================================================================================
+[4/10] GQ04 — Nếu chọn nhận store credit thay vì hoàn tiền, tôi được bao nhiêu phần trăm so vớ
+====================================================================================================
+
+📌 ROUTING & PERFORMANCE:
+  Supervisor Route: policy_tool_worker
+  Route Reason: policy/access keyword detected: ['hoàn tiền']
+  Confidence Score: 0.48 (MEDIUM)
+  Latency: 9582.0ms
+  Timestamp: 2026-04-14T17:50:20.221451
+
+🔧 WORKERS & MCP:
+  Workers Called: policy_tool_worker → retrieval_worker → synthesis_worker
+  MCP Tools Used: ['search_kb']
+  HITL Triggered: False
+
+📄 SOURCES:
+    • policy/refund-v4.pdf
+
+💬 SYNTHESIS OUTPUT:
+  Nếu bạn chọn nhận store credit thay vì hoàn tiền, bạn sẽ nhận được giá trị 110% so với số tiền gốc. [1]
+
+====================================================================================================
+[5/10] GQ05 — Contractor từ bên ngoài công ty có thể được cấp quyền Admin Access không? Nếu có
+====================================================================================================
+
+📌 ROUTING & PERFORMANCE:
+  Supervisor Route: policy_tool_worker
+  Route Reason: policy/access keyword detected: ['cấp quyền', 'contractor', 'admin access']
+  Confidence Score: 0.6 (HIGH)
+  Latency: 10424.0ms
+  Timestamp: 2026-04-14T17:50:30.646012
+
+🔧 WORKERS & MCP:
+  Workers Called: policy_tool_worker → retrieval_worker → synthesis_worker
+  MCP Tools Used: ['search_kb', 'check_access_permission']
+  HITL Triggered: False
+
+📄 SOURCES:
+    • it/access-control-sop.md
+
+💬 SYNTHESIS OUTPUT:
+  Contractor từ bên ngoài công ty có thể được cấp quyền Admin Access, nhưng cần phải tuân thủ quy trình phê duyệt. 
+
+1. **Thời gian xử lý**: 5 ngày làm việc.
+2. **Yêu cầu đặc biệt**: Phải hoàn thành training bắt buộc về security policy.
+
+Quy trình phê duyệt bao gồm sự đồng ý của IT Manager và CISO [2]...
+
+====================================================================================================
+[6/10] GQ06 — Lúc 2 giờ sáng xảy ra sự cố P1, on-call engineer cần cấp quyền tạm thời cho một 
+====================================================================================================
+
+📌 ROUTING & PERFORMANCE:
+  Supervisor Route: policy_tool_worker
+  Route Reason: policy/access keyword detected: ['cấp quyền']
+  Confidence Score: 0.64 (HIGH)
+  Latency: 17647.0ms
+  Timestamp: 2026-04-14T17:50:48.293568
+
+🔧 WORKERS & MCP:
+  Workers Called: policy_tool_worker → retrieval_worker → synthesis_worker
+  MCP Tools Used: ['search_kb', 'get_ticket_info', 'check_access_permission']
+  HITL Triggered: False
+
+📄 SOURCES:
+    • support/sla-p1-2026.pdf
+    • it/access-control-sop.md
+
+💬 SYNTHESIS OUTPUT:
+  Quy trình cấp quyền tạm thời cho engineer xử lý sự cố P1 như sau:
+
+1. **On-call IT Admin** có thể cấp quyền tạm thời sau khi được **Tech Lead** phê duyệt bằng lời.
+2. Quyền tạm thời này tồn tại **tối đa 24 giờ**.
+3. Sau 24 giờ, phải có **ticket chính thức** hoặc quyền sẽ bị **thu hồi tự động**.
+4. T...
+
+====================================================================================================
+[7/10] GQ07 — Công ty sẽ phạt bao nhiêu nếu team IT vi phạm cam kết SLA P1?
+====================================================================================================
+
+📌 ROUTING & PERFORMANCE:
+  Supervisor Route: retrieval_worker
+  Route Reason: SLA/ticket keyword detected: ['p1', 'sla']
+  Confidence Score: 0.3 (LOW)
+  Latency: 3696.0ms
+  Timestamp: 2026-04-14T17:50:51.989626
+
+🔧 WORKERS & MCP:
+  Workers Called: retrieval_worker → synthesis_worker
+  MCP Tools Used: None
+  HITL Triggered: False
+
+📄 SOURCES:
+    • support/helpdesk-faq.md
+    • support/sla-p1-2026.pdf
+
+💬 SYNTHESIS OUTPUT:
+  Không đủ thông tin trong tài liệu nội bộ.
+
+====================================================================================================
+[8/10] GQ08 — Nhân viên phải báo trước bao nhiêu ngày để xin nghỉ phép năm? Con số này có giốn
+====================================================================================================
+
+📌 ROUTING & PERFORMANCE:
+  Supervisor Route: retrieval_worker
+  Route Reason: HR policy keyword detected: ['nghỉ phép']
+  Confidence Score: 0.59 (HIGH)
+  Latency: 6869.0ms
+  Timestamp: 2026-04-14T17:50:58.858914
+
+🔧 WORKERS & MCP:
+  Workers Called: retrieval_worker → synthesis_worker
+  MCP Tools Used: None
+  HITL Triggered: False
+
+📄 SOURCES:
+    • hr/leave-policy-2026.pdf
+    • it/access-control-sop.md
+
+💬 SYNTHESIS OUTPUT:
+  1. Nhân viên phải báo trước ít nhất 3 ngày làm việc để xin nghỉ phép năm [2].
+2. Đối với nghỉ ốm, nhân viên cần thông báo cho Line Manager trước 9:00 sáng ngày nghỉ và nếu nghỉ trên 3 ngày liên tiếp thì cần giấy tờ y tế [1.2]. 
+
+Kết luận: Số ngày báo trước để xin nghỉ phép năm (3 ngày) không giống v...
+
+====================================================================================================
+[9/10] GQ09 — Mật khẩu tài khoản công ty cần đổi định kỳ không? Nếu có, hệ thống sẽ nhắc nhở t
+====================================================================================================
+
+📌 ROUTING & PERFORMANCE:
+  Supervisor Route: retrieval_worker
+  Route Reason: default → retrieval_worker (no specific keyword matched)
+  Confidence Score: 0.3 (LOW)
+  Latency: 4312.0ms
+  Timestamp: 2026-04-14T17:51:03.171686
+
+🔧 WORKERS & MCP:
+  Workers Called: retrieval_worker → synthesis_worker
+  MCP Tools Used: None
+  HITL Triggered: False
+
+📄 SOURCES:
+    • support/helpdesk-faq.md
+    • it/access-control-sop.md
+
+💬 SYNTHESIS OUTPUT:
+  Có, mật khẩu tài khoản công ty cần được thay đổi định kỳ mỗi 90 ngày. Hệ thống sẽ nhắc nhở trước 7 ngày khi mật khẩu sắp hết hạn [1]. Tuy nhiên, tài liệu không cung cấp thông tin về cách thức đổi mật khẩu. Không đủ thông tin trong tài liệu nội bộ.
+
+====================================================================================================
+[10/10] GQ10 — Chính sách hoàn tiền hiện tại áp dụng cho đơn hàng đặt trước ngày 01/02/2026 khô
+====================================================================================================
+
+📌 ROUTING & PERFORMANCE:
+  Supervisor Route: policy_tool_worker
+  Route Reason: policy/access keyword detected: ['hoàn tiền']
+  Confidence Score: 0.56 (HIGH)
+  Latency: 7842.0ms
+  Timestamp: 2026-04-14T17:51:11.014675
+
+🔧 WORKERS & MCP:
+  Workers Called: policy_tool_worker → retrieval_worker → synthesis_worker
+  MCP Tools Used: ['search_kb']
+  HITL Triggered: False
+
+📄 SOURCES:
+    • policy/refund-v4.pdf
+
+💬 SYNTHESIS OUTPUT:
+  Chính sách hoàn tiền hiện tại không áp dụng cho đơn hàng đặt trước ngày 01/02/2026. Các đơn hàng đặt trước ngày này sẽ áp dụng theo chính sách hoàn tiền phiên bản 3 [1].
+
+
+====================================================================================================
+AGGREGATE STATISTICS
+====================================================================================================
+
+📊 CONFIDENCE METRICS:
+  Total Questions: 10/10
+  Average Confidence: 0.499
+  Min Confidence: 0.300
+  Max Confidence: 0.640
+
+  Confidence Distribution:
+    gq01: 0.50 │██████████░░░░░░░░░░│
+    gq02: 0.57 │███████████░░░░░░░░░│
+    gq03: 0.45 │█████████░░░░░░░░░░░│
+    gq04: 0.48 │█████████░░░░░░░░░░░│
+    gq05: 0.60 │████████████░░░░░░░░│
+    gq06: 0.64 │████████████░░░░░░░░│
+    gq07: 0.30 │██████░░░░░░░░░░░░░░│
+    gq08: 0.59 │███████████░░░░░░░░░│
+    gq09: 0.30 │██████░░░░░░░░░░░░░░│
+    gq10: 0.56 │███████████░░░░░░░░░│
+
+⏱️  LATENCY METRICS:
+  Average Latency: 8008.8ms
+  Min Latency: 2078.0ms (fastest)
+  Max Latency: 17647.0ms (slowest)
+  Total Execution Time: 80088.0ms (~80.1s)
+
+  Latency by Question:
+    gq01:  6105.0ms │██████░░░░░░░░░░░░░░│
+    gq02:  2078.0ms │██░░░░░░░░░░░░░░░░░░│
+    gq03: 11533.0ms │███████████░░░░░░░░░│
+    gq04:  9582.0ms │█████████░░░░░░░░░░░│
+    gq05: 10424.0ms │██████████░░░░░░░░░░│
+    gq06: 17647.0ms │█████████████████░░░│
+    gq07:  3696.0ms │███░░░░░░░░░░░░░░░░░│
+    gq08:  6869.0ms │██████░░░░░░░░░░░░░░│
+    gq09:  4312.0ms │████░░░░░░░░░░░░░░░░│
+    gq10:  7842.0ms │███████░░░░░░░░░░░░░│
+
+🔧 MCP TOOL USAGE:
+  MCP Usage Rate: 5/10 (50%)
+  Questions with MCP: gq03, gq04, gq05, gq06, gq10
+
+🎯 ROUTING ACCURACY:
+  Routing Accuracy: 10/10 (100%)
+  All keyword-based routing decisions correct
+
+✓ GROUNDING QUALITY:
+  Abstain Cases: 2/10
+  Abstain Questions: gq07, gq09
+  Hallucination Rate: 0% (none detected)
+
+
+====================================================================================================
+GRADING DATA TABLE
+====================================================================================================
+
+ID     Confidence   Latency    Route                MCP                           
+----------------------------------------------------------------------------------------------------
+gq01   0.500        6105       retrieval_worker     None                          
+gq02   0.570        2078       retrieval_worker     None                          
+gq03   0.450        11533      policy_tool_worker   search_kb                     
+gq04   0.480        9582       policy_tool_worker   search_kb                     
+gq05   0.600        10424      policy_tool_worker   search_kb, check_access_permission
+gq06   0.640        17647      policy_tool_worker   search_kb, get_ticket_info, check_access_permission
+gq07   0.300        3696       retrieval_worker     None                          
+gq08   0.590        6869       retrieval_worker     None                          
+gq09   0.300        4312       retrieval_worker     None                          
+gq10   0.560        7842       policy_tool_worker   search_kb                     
